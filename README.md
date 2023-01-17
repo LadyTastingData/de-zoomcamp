@@ -1,2 +1,3 @@
 # de-zoomcamp
-My learning diary on data engineering, following the content by DataTalksClub.
+Welcome to my learning diary on data engineering, where I follow the content by [DataTalksClub](https://github.com/DataTalksClub/data-engineering-zoomcamp).
+
