@@ -140,10 +140,10 @@ terraform init
 ls -la
 
 # Check changes to new infra plan
-terraform plan -var="project=<your-gcp-project-id>"
-terraform plan  (enter project id)
-terraform apply
-terraform destroy 
+
+- terraform plan  (enter project id)
+- terraform apply
+- terraform destroy 
  
  
  
