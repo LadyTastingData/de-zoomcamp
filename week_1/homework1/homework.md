@@ -19,11 +19,15 @@ Which tag has the following text? - *Write the image ID to the file*
 - `--idimage string`
 - `--idfile string`
 
-### Answer 1. 
-```docker --help build```
+### Answer: 
+
  `--iidfile string` (Write the image ID to the file)
  
- 
+### Code:
+
+```docker --help build```
+
+
 ## Question 2. Understanding docker first run 
 
 Run docker with the python:3.9 image in an interactive mode and the entrypoint of bash.
@@ -35,10 +39,17 @@ How many python packages/modules are installed?
 - 3
 - 7
 
-### Answer 2.
-```docker run -it -entrypoint=bash python:3.9```
-```pip list```
+### Answer:
+
 There are 3 python modules installed: pip, setuptools, wheel
+
+### Code:
+
+```docker run -it -entrypoint=bash python:3.9```
+
+```pip list```
+
+
 
 
 # Prepare Postgres
@@ -54,10 +65,11 @@ You will also need the dataset with zones:
 
 Download this data and put it into Postgres (with jupyter notebooks or with a pipeline)
 
-I put the data into Postgres using upload-data.ipynb. Then, run command:
+I put the data into Postgres using [upload-data.ipynb](https://github.com/LadyTastingData/de-zoomcamp/blob/main/week_1/homework1/upload-data.ipynb).
+
+Then, I ran command:
 
 ```pgcli -h localhost -U root -d ny_taxi```
-
 
 
 ## Question 3. Count records 
@@ -73,9 +85,11 @@ Remember that `lpep_pickup_datetime` and `lpep_dropoff_datetime` columns are in 
 - 17630
 - 21090
 
-Answer 3: 20530
+### Answer: 
 
-Code: 
+20530
+
+### Code: 
 
 ```select count(*) from green_taxi_data where lpep_pickup_datetime::date = '2019-01-15' and lpep_dropoff_dat etime::date = '2019-01-15';```
 
@@ -89,11 +103,20 @@ Use the pick up time for your calculations.
 - 2019-01-15
 - 2019-01-10
 
-Answer 4: 2019-01-15 00:00:00 (max_ditance=117.99)
+### Answer: 
 
-Code: 
+2019-01-15 00:00:00 (max_ditance=117.99)
 
-```select date_trunc('day',lpep_pickup_datetime) as pickup_day, max(trip_distance) as max_distance from green_taxi_data group by pickup_day order by max_distance desc limit 1;```
+### Code: 
+
+```
+select date_trunc('day',lpep_pickup_datetime) as pickup_day,
+max(trip_distance) as max_distance
+from green_taxi_data
+group by pickup_day
+order by max_distance desc
+limit 1;
+```
 
 ## Question 5. The number of passengers
 
@@ -104,9 +127,11 @@ In 2019-01-01 how many trips had 2 and 3 passengers?
 - 2: 1282 ; 3: 254
 - 2: 1282 ; 3: 274
 
-Answer 5: 2:1282; 3:254
+### Answer: 
 
-Code: 
+2:1282; 3:254
+
+### Code: 
 
 ```select count() from green_taxi_data where lpep_pickup_datetime::date = '2019-01-01' and passenger_count = 2;``` 
 
@@ -125,25 +150,63 @@ Note: it's not a typo, it's `tip` , not `trip`
 - South Ozone Park
 - Long Island City/Queens Plaza
 
-Answer 6: Long Island City/Queens Plaza
+### Answer: 
 
-Code: 
+Long Island City/Queens Plaza
 
-```select dozones."Zone" as result 
-from green_taxi_data as taxi 
+### Code: 
+
+```
+select dozones."Zone" as result
+from green_taxi_data as taxi
 inner join zones as puzones
 on taxi."PULocationID"=puzones."LocationID"
 left join zones as dozones
 on taxi."DOLocationID"=dozones."LocationID"
 where puzones."Zone" ilike '%Astoria%'
 order by taxi.tip_amount desc
-limit 1;```
+limit 1;
+```
+
+# Terraform
+
+In this homework we'll prepare the environment by creating resources in GCP with Terraform.
+
+I installed Terraform in my VM on GCP and copied the files from the course repo
+[here](https://github.com/DataTalksClub/data-engineering-zoomcamp/tree/main/week_1_basics_n_setup/1_terraform_gcp/terraform) to my VM.
+
+I Modified the files as necessary to create a GCP Bucket and Big Query Dataset.
 
 
+## Question 1. Creating Resources
 
-Deadline: 26 January (Thursday), 22:00 CET
+After updating the main.tf and variable.tf files run:
 
+```
+terraform apply
+```
 
-## Solution
+Paste the output of this command into the homework submission form.
 
-We will publish the solution here
+### Code:
+
+```shell
+# Refresh service-account's auth-token for this session
+gcloud auth application-default login
+
+# Initialize state file (.tfstate)
+terraform init
+
+# Check changes to new infra plan
+terraform plan 
+```
+
+```shell
+terraform apply 
+```
+
+```shell
+# Delete infra after your work, to avoid costs on any running services
+terraform destroy
+```
+
