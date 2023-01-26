@@ -1,3 +1,5 @@
+(This file is under construction :))
+
 ### Setting up Google Cloud environment
 Video: https://www.youtube.com/watch?v=ae-CV2KfoN0&list=PL3MmuxUbc_hJed7dXYoJw8DoCuVHhGEQb&index=13&ab_channel=DataTalksClub%E2%AC%9B
 
