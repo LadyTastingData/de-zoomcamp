@@ -1,5 +1,5 @@
 ## de-zoomcamp
-Welcome to my learning diary on data engineering, where I follow the content by [DataTalksClub](https://github.com/DataTalksClub/data-engineering-zoomcamp).
+Welcome to my learning diary on data engineering, where I follow the content from [DataTalksClub](https://github.com/DataTalksClub/data-engineering-zoomcamp).
 
 ### Technologies
 * *Google Cloud Platform (GCP)*: Cloud-based auto-scaling platform by Google
