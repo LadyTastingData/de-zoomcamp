@@ -107,6 +107,46 @@ We see port 8888, add this port number in VS code. And copy the localhost link a
 
 Open upload_data.ipynb (Also load the data: wget https://s3.amazonaws.com/nyc-tlc/trip+data/yellow_tripdata_2021-01.csv) and try running the codes...
 
+- pgcli -h localhost -U root -d ny_taxi
+- \dt
+- select count(1) from green_taxi_data
+
+select count(*) from green_taxi_data where lpep_pickup_datetime::date = '2019-01-15' and lpep_dropoff_dat
+ etime::date = '2019-01-15';
+ Answer: 20530
+ 
+select date_trunc('day',lpep_pickup_datetime) as pickup_day,
+max(trip_distance) as max_distance
+from green_taxi_data
+group by pickup_day
+order by max_distance desc
+limit 1;
+
+Answer: 2019-01-15 00:00:00 (max_ditance=117.99)
+
+select count(*) from green_taxi_data where lpep_pickup_datetime::date = '2019-01-01' and passenger_count = 2;
+select count(*) from green_taxi_data where lpep_pickup_datetime::date = '2019-01-01' and passenger_count = 3;
+
+Answer: 2:1282; 3:254
+
+
+select dozones."Zone" as result
+from green_taxi_data as taxi
+inner join zones as puzones
+on taxi."PULocationID"=puzones."LocationID"
+left join zones as dozones
+on taxi."DOLocationID"=dozones."LocationID"
+where puzones."Zone" ilike '%Astoria%'
+order by taxi.tip_amount desc
+limit 1;
+
+Answer: Long Island City/Queens Plaza
+
+
+
+
+
+
 Next, we will install Terraform
 Copy the link for Linux binary download Amd64 for Terraform: https://releases.hashicorp.com/terraform/1.3.7/terraform_1.3.7_linux_amd64.zip
 - cd
@@ -194,7 +234,16 @@ We can also create a pipeline.py and write our Python code....
 
 ## Ingesting NY Taxi Data to Postgres
 
-- docker run -it -e POSTGRES_USER="root" -e POSTGRES_PASSWORD="root" -e POSTGRES_DB="ny_taxi" postgres:13
+Now we will run Postgres in Docker and we will put some data to Postgres by using a Python script.
+To run Postgres, we need the Docker image for Postgres
+- docker pull postgres
+
+
+- sudo chmod a+rwx ny_taxi_postgres_data
+- docker run -it -e POSTGRES_USER="root" -e POSTGRES_PASSWORD="root" -e POSTGRES_DB="ny_taxi" -v $(pwd)/ny_taxi_postgres_data:/var/lib/postgresql/data -p 5432:5432 postgres:13
+
+
+
 
 pip install pgcli (pgcli is a Python library)
 
