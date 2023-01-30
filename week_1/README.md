@@ -141,7 +141,7 @@ terraform init
 
 ls -la
 
-# Check changes to new infra plan
+- Check changes to new infra plan
 
 - terraform plan  (enter project id)
 - terraform apply
