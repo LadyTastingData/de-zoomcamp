@@ -117,6 +117,7 @@ Open upload_data.ipynb (Also load the data: wget https://s3.amazonaws.com/nyc-tl
 
 
 
+## Terraform
 
 Next, we will install Terraform
 Copy the link for Linux binary download Amd64 for Terraform: https://releases.hashicorp.com/terraform/1.3.7/terraform_1.3.7_linux_amd64.zip
@@ -133,19 +134,14 @@ Copy the link for Linux binary download Amd64 for Terraform: https://releases.ha
 Now we need the json credentials. We need to put the json file from our google cloud account to here. [Add it later]
 - export GOOGLE_APPLICATION_CREDENTIALS myfile.json
 
-# Refresh service-account's auth-token for this session
-gcloud auth application-default login
+Refresh service-account's auth-token for this session
+ - gcloud auth application-default login
 
-# Initialize state file (.tfstate)
-terraform init
-
-ls -la
-
-- Check changes to new infra plan
-
-- terraform plan  (enter project id)
-- terraform apply
-- terraform destroy 
+- Initialize state file (.tfstate): terraform init
+ - ls -la
+- Check changes to new infra plan: terraform plan  (enter project id)
+ - terraform apply (After we apply this, we will see "dtc_data_lake_{project_ID}" created in GC Cloud Storage. 
+ - terraform destroy 
  
  
  
