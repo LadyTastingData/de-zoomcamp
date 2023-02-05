@@ -8,7 +8,7 @@ Welcome to my learning diary on data engineering, where I follow the content fro
 * *Terraform*: Infrastructure-as-Code (IaC)
 * *Docker*: Containerization
 * *SQL*: Data Analysis & Exploration
-* *Airflow*: Pipeline Orchestration
+* *Prefect*: Pipeline Orchestration
 * *dbt*: Data Transformation
 * *Spark*: Distributed Processing
 * *Kafka*: Streaming
