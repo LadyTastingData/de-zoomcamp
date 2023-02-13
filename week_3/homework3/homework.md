@@ -9,7 +9,8 @@ Create an external table using the fhv 2019 data. </br>
 Create a table in BQ using the fhv 2019 data (do not partition or cluster this table). </br>
 Data can be found here: https://github.com/DataTalksClub/nyc-tlc-data/releases/tag/fhv </p>
 
-For loading the fhv data to Google Cloud Storage bucket, I have used Prefect and run the flow in the file fhv_etl_web_to_gcs.py. Then, I run the following commands:
+### Codes for Setup: 
+For this exercise, I continued using the same conda environment that I created for last week's exercises. For loading the fhv 2019 data to Google Cloud Storage bucket, I used Prefect and run the flow in the file [fhv_etl_web_to_gcs.py](https://github.com/LadyTastingData/de-zoomcamp/blob/main/week_3/homework3/fhv_etl_web_to_gcs.py). Then, I run the following commands:
 
 ```prefect deployment build ./fhv_etl_web_to_gcs.py:fhv_etl_parent_flow -n "Parameterized ETL"```
 
@@ -25,7 +26,7 @@ Then,
 
 Now, we can see the fhv data files for the year 2019 inside GCS bucket. 
 
-For creating an external table using the fhv data in GCS Bucket, I have run the following SQL query in GC BigQuery:
+For creating an external table using the fhv data in GCS Bucket, I have run the following SQL code in Google Cloud BigQuery (BQ):
 
 ```
 -- Creating external table referring to gcs path
