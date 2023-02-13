@@ -127,10 +127,10 @@ Use the BQ table you created earlier in your from clause and note the estimated 
 
 ### Code:
 ```
--- Create a partitioned table from external table
+-- Create a partitioned table from external table and cluster by affiliated_base_number
 CREATE OR REPLACE TABLE high-tenure-375016.dezoomcamp.fhv_tripdata_partitoned
-PARTITION BY
-  DATE(pickup_datetime) AS
+PARTITION BY DATE(pickup_datetime)
+CLUSTER BY affiliated_base_number AS
 SELECT * FROM high-tenure-375016.dezoomcamp.external_fhv_tripdata;
 
 -- Impact of partition
