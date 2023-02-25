@@ -54,7 +54,7 @@ def write_gcs(path: Path) -> None:
 #gcp_cloud_storage_bucket_block = GcsBucket.load("zoom-gcs")
 
 @flow()
-def etl_web_to_gcs() -> None:
+def etl_web_to_gcs(year, month, color) -> None:
     """The main ETL function"""
     #color = "green" #"green"
     #year = 2020 #2020
