@@ -26,6 +26,15 @@ def clean(color: str, df: pd.DataFrame) -> pd.DataFrame:
         """Fix dtype issues"""
         df["lpep_pickup_datetime"] = pd.to_datetime(df["lpep_pickup_datetime"])
         df["lpep_dropoff_datetime"] = pd.to_datetime(df["lpep_dropoff_datetime"])
+        df["trip_type"] = df["trip_type"].astype('Int64')
+
+    if color == "yellow" or color == "green":
+        df["VendorID"] = df["VendorID"].astype('Int64')
+        df["RatecodeID"] = df["RatecodeID"].astype('Int64')
+        df["PULocationID"] = df["PULocationID"].astype('Int64')
+        df["DOLocationID"] = df["DOLocationID"].astype('Int64')
+        df["passenger_count"] = df["passenger_count"].astype('Int64')
+        df["payment_type"] = df["payment_type"].astype('Int64')
 
     #"""Fix dtype issues"""
     #df["lpep_pickup_datetime"] = pd.to_datetime(df["lpep_pickup_datetime"])
@@ -68,14 +77,14 @@ def etl_web_to_gcs(year, month, color) -> None:
     write_gcs(path)
 
 @flow()
-def etl_parent_flow(months: list[int] = [12], year: int = 2019, color: str = "yellow"):
+def etl_parent_flow(months: list[int] = [1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12], year: int = 2019, color: str = "yellow"):
     for month in months:
         etl_web_to_gcs(year, month, color)
 
 
 if __name__ == "__main__":
     color = "yellow"
-    months = [12]
+    months = [1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12]
     year = 2019
     etl_parent_flow(months, year, color)
 
