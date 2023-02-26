@@ -20,7 +20,16 @@ only if you want to.
 > **Note**: if your answer doesn't match exactly, select the closest option 
 
 
-Preparation: I downloaded the data files to GC Storage, and then I created the tables in BigQuery using the following codes: 
+**Preparation:** Using the files [etl_web_to_gcs.py](https://github.com/LadyTastingData/de-zoomcamp/blob/main/week_2/homework2/etl_web_to_gcs.py) and [fhv_clean_etl_web_to_gcs.py](https://github.com/LadyTastingData/de-zoomcamp/blob/main/week_2/homework2/fhv_clean_etl_web_to_gcs.py), I downloaded the data files to GC Storage:
+
+```
+prefect deployment build week_2/homework2/etl_web_to_gcs.py:etl_parent_flow --name test1 -sb github/gh-block --apply
+prefect agent start --work-queue "default"
+prefect deployment build week_2/homework2/fhv_clean_etl_web_to_gcs.py:fhv_etl_parent_flow --name test2 -sb github/gh-block --apply
+prefect agent start --work-queue "default"
+```
+
+Then, I created the tables in BigQuery using the following codes: 
 
 ```
 -- Creating external table referring to gcs path
@@ -45,6 +54,8 @@ OPTIONS (
 );
 ```
 
+dbt files can be found [here](https://github.com/LadyTastingData/de-zoomcamp/tree/main/week_4/dbt). 
+
 ## Question 1: 
 
 **What is the count of records in the model fact_trips after running all models with the test run variable disabled and filtering for 2019 and 2020 data only (pickup datetime)?** 
@@ -62,12 +73,15 @@ You should find the views and models for querying in your DWH.
 - 61648442 (~ 61567785)
 
 ### Code:
+
+In dbt Cloud:
 ```
 dbt run --select stg_green_tripdata --var 'is_test_run:false'
 dbt run --select stg_yellow_tripdata --var 'is_test_run:false'
 dbt build --select +fact_trips --var 'is_test_run:false'
 ```
 
+In BQ:
 ```
 SELECT COUNT(1) FROM `high-tenure-375016.dbt_ltd.fact_trips` WHERE pickup_datetime BETWEEN '2019-01-01' AND '2020-12-31';
 ```
@@ -108,10 +122,13 @@ Filter records with pickup time in year 2019.
 - 43244696 (~ 43183729)
 
 ### Code:
+
+In dbt cloud:
 ```
 dbt run --select stg_fhv_tripdata --var 'is_test_run:false'
 ```
 
+In BQ:
 ```
 SELECT COUNT(1) FROM `high-tenure-375016.dbt_ltd.stg_fhv_tripdata` WHERE pickup_datetime BETWEEN '2019-01-01' AND '2019-12-31';
 ```
@@ -135,10 +152,13 @@ Run it via the CLI without limits (is_test_run: false) and filter records with p
 - 22998722 (~ 22989750)
 
 ### Code:
+
+In dbt cloud:
 ```
 dbt build --select +fact_fhv_trips --var 'is_test_run:false'
 ```
 
+In BQ:
 ```
 SELECT COUNT(1) FROM `high-tenure-375016.dbt_ltd.fact_fhv_trips` WHERE pickup_datetime BETWEEN '2019-01-01' AND '2019-12-31';
 ```
