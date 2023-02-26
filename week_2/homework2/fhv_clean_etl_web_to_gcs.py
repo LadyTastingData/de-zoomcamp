@@ -14,21 +14,21 @@ def fetch(dataset_url: str) -> pd.DataFrame:
     df = pd.read_csv(dataset_url)
     return df
 
-
- @task(log_prints=True)
- def clean(df: pd.DataFrame) -> pd.DataFrame:
+@task(log_prints=True)
+def clean(df: pd.DataFrame) -> pd.DataFrame:
     """Rename columns"""
     df.rename({'dropoff_datetime':'dropOff_datetime'}, axis='columns', inplace=True)
     df.rename({'PULocationID':'PUlocationID'}, axis='columns', inplace=True)
     df.rename({'DOLocationID':'DOlocationID'}, axis='columns', inplace=True)
-
+    
     """Fix dtype issues"""
     df["pickup_datetime"] = pd.to_datetime(df["pickup_datetime"])
     df["dropOff_datetime"] = pd.to_datetime(df["dropOff_datetime"])
-
+    
     # See https://pandas.pydata.org/docs/user_guide/integer_na.html
     df["PUlocationID"] = df["PUlocationID"].astype('Int64')
     df["DOlocationID"] = df["DOlocationID"].astype('Int64')
+    
     print(df.head(2))
     print(f"columns: {df.dtypes}")
     print(f"rows: {len(df)}")
