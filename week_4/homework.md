@@ -19,7 +19,8 @@ only if you want to.
 
 > **Note**: if your answer doesn't match exactly, select the closest option 
 
-## I downloaded the data files to GC Storage, and then I created the tables in BigQuery using the following codes: 
+
+Preparation: I downloaded the data files to GC Storage, and then I created the tables in BigQuery using the following codes: 
 
 ```
 -- Creating external table referring to gcs path
@@ -87,7 +88,7 @@ You will need to complete "Visualising the data" videos, either using [google da
 
 - 89.9/10.1 (~ 89.8/10.2))
 
-The plots can be seen (here)[].
+The plots generated in Google Data Studio can be found (here)[].
 
 
 ## Question 3: 
@@ -158,4 +159,4 @@ Create a dashboard with some tiles that you find interesting to explore the data
 
 - March (For year 2019)
 
-The barplot can be seen (here)[].
+The barplot generated in Google Data Studio can be found (here)[].
