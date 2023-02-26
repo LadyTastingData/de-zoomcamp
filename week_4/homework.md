@@ -88,7 +88,7 @@ You will need to complete "Visualising the data" videos, either using [google da
 
 - 89.9/10.1 (~ 89.8/10.2))
 
-The plots generated in Google Data Studio can be found (here)[].
+The plots generated in Google Data Studio can be found [here](https://github.com/LadyTastingData/de-zoomcamp/blob/main/week_4/looker_studio/dezoomcamp-week-4_Report.pdf).
 
 
 ## Question 3: 
@@ -159,4 +159,4 @@ Create a dashboard with some tiles that you find interesting to explore the data
 
 - March (For year 2019)
 
-The barplot generated in Google Data Studio can be found (here)[].
+The barplot generated in Google Data Studio can be found [here](https://github.com/LadyTastingData/de-zoomcamp/blob/main/week_4/looker_studio/dezoomcamp-week-4_Report.pdf).
