@@ -55,7 +55,7 @@ def write_gcs(path: Path) -> None:
 #gcp_cloud_storage_bucket_block = GcsBucket.load("zoom-gcs")
 
 @flow()
-def fhv_etl_web_to_gcs(year: int, month: int) -> None:
+def fhv_clean_etl_web_to_gcs(year: int, month: int) -> None:
     """The main ETL function"""
     #year = 2020 #2020
     #month = 1
@@ -72,7 +72,7 @@ def fhv_etl_parent_flow(
     months: list[int] = [1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12], year: int = 2019
 ):
     for month in months:
-        fhv_etl_web_to_gcs(year, month)
+        fhv_clean_etl_web_to_gcs(year, month)
 
 
 if __name__ == "__main__":
