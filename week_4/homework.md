@@ -19,7 +19,32 @@ only if you want to.
 
 > **Note**: if your answer doesn't match exactly, select the closest option 
 
-### Question 1: 
+## I downloaded the data files to GC Storage, and then I created the tables in BigQuery using the following codes: 
+
+```
+-- Creating external table referring to gcs path
+CREATE OR REPLACE EXTERNAL TABLE `high-tenure-375016.dezoomcamp.external_green_tripdata`
+OPTIONS (
+  format = 'parquet',
+  uris = ['gs://ltd-zoom/data/green/green_tripdata_*.parquet']
+);
+
+-- Creating external table referring to gcs path
+CREATE OR REPLACE EXTERNAL TABLE `high-tenure-375016.dezoomcamp.external_yellow_tripdata`
+OPTIONS (
+  format = 'parquet',
+  uris = ['gs://ltd-zoom/data/yellow/yellow_tripdata_*.parquet']
+);
+
+-- Creating external table referring to gcs path
+CREATE OR REPLACE EXTERNAL TABLE `high-tenure-375016.dezoomcamp.external_fhv_clean_tripdata`
+OPTIONS (
+  format = 'CSV',
+  uris = ['gs://ltd-zoom/data/fhv_clean/fhv_tripdata_2019-*.csv.gz']
+);
+```
+
+## Question 1: 
 
 **What is the count of records in the model fact_trips after running all models with the test run variable disabled and filtering for 2019 and 2020 data only (pickup datetime)?** 
 
@@ -31,8 +56,23 @@ You should find the views and models for querying in your DWH.
 - 61648442
 - 71648442
 
+### Answer: 
 
-### Question 2: 
+- 61648442 (~ 61567785)
+
+### Code:
+```
+dbt run --select stg_green_tripdata --var 'is_test_run:false'
+dbt run --select stg_yellow_tripdata --var 'is_test_run:false'
+dbt build --select +fact_trips --var 'is_test_run:false'
+```
+
+```
+SELECT COUNT(1) FROM `high-tenure-375016.dbt_ltd.fact_trips` WHERE pickup_datetime BETWEEN '2019-01-01' AND '2020-12-31';
+```
+
+
+## Question 2: 
 
 **What is the distribution between service type filtering by years 2019 and 2020 data as done in the videos?**
 
@@ -43,9 +83,14 @@ You will need to complete "Visualising the data" videos, either using [google da
 - 76.3/23.7
 - 99.1/0.9
 
+### Answer: 
+
+- 89.9/10.1 (~ 89.8/10.2))
+
+The plots can be seen (here)[].
 
 
-### Question 3: 
+## Question 3: 
 
 **What is the count of records in the model stg_fhv_tripdata after running all models with the test run variable disabled (:false)?**  
 
@@ -57,8 +102,21 @@ Filter records with pickup time in year 2019.
 - 53244696
 - 63244696
 
+### Answer:
 
-### Question 4: 
+- 43244696 (~ 43183729)
+
+### Code:
+```
+dbt run --select stg_fhv_tripdata --var 'is_test_run:false'
+```
+
+```
+SELECT COUNT(1) FROM `high-tenure-375016.dbt_ltd.stg_fhv_tripdata` WHERE pickup_datetime BETWEEN '2019-01-01' AND '2019-12-31';
+```
+
+
+## Question 4: 
 
 **What is the count of records in the model fact_fhv_trips after running all dependencies with the test run variable disabled (:false)?**  
 
@@ -71,7 +129,21 @@ Run it via the CLI without limits (is_test_run: false) and filter records with p
 - 32998722
 - 42998722
 
-### Question 5: 
+### Answer:
+
+- 22998722 (~ 22989750)
+
+### Code:
+```
+dbt build --select +fact_fhv_trips --var 'is_test_run:false'
+```
+
+```
+SELECT COUNT(1) FROM `high-tenure-375016.dbt_ltd.fact_fhv_trips` WHERE pickup_datetime BETWEEN '2019-01-01' AND '2019-12-31';
+```
+
+
+## Question 5: 
 
 **What is the month with the biggest amount of rides after building a tile for the fact_fhv_trips table?**
 
@@ -81,3 +153,9 @@ Create a dashboard with some tiles that you find interesting to explore the data
 - April
 - January
 - December
+
+### Answer:
+
+- March (For year 2019)
+
+The barplot can be seen (here)[].
