@@ -1,0 +1,14 @@
+version: 2
+
+sources:
+  - name: staging
+    database: high-tenure-375016
+    schema: dezoomcamp
+
+    tables:
+      - name: external_green_tripdata
+      - name: external_yellow_tripdata
+      - name: external_fhv_clean_tripdata
+
+
+      
